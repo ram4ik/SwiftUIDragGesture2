@@ -9,8 +9,20 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var isDragging = false
+    
+    var drag: some Gesture {
+        DragGesture()
+            .onChanged { _ in self.isDragging = true }
+            .onEnded { _ in self.isDragging = false }
+    }
+    
     var body: some View {
-        Text("Hello, World!")
+        Circle()
+            .fill(isDragging ? Color.red : Color.green)
+            .animation(.easeInOut(duration: 2))
+            .frame(width: 200)
+            .gesture(drag)
     }
 }
 
